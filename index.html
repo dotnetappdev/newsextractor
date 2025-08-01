@@ -25,22 +25,25 @@
 
     <!-- Controls above split frame -->
     <div id="top-controls">
-      <div class="mode-switch" style="margin-bottom: 0.5rem;">
-        <label><input type="radio" name="mode" value="markdown" checked> Markdown</label>
-        <label><input type="radio" name="mode" value="html"> HTML</label>
-      </div>
+      <!-- Mode switch moved to toolbar below -->
       <div class="url-row">
         <input id="input-url" type="text" placeholder="Paste article URL here" />
         <button id="fetch-article">Fetch</button>
       </div>
       <input id="title-box" type="text" placeholder="Article Title" style="margin-bottom:0.5rem;" readonly />
       <div id="editor-toolbar">
+        <div class="mode-switch" style="margin-right:1rem;">
+          <label><input type="radio" name="mode" value="markdown" checked> Markdown</label>
+          <label><input type="radio" name="mode" value="html"> HTML</label>
+        </div>
         <button type="button" data-action="bold"><b>B</b></button>
         <button type="button" data-action="italic"><i>I</i></button>
         <button type="button" data-action="heading">H</button>
         <button type="button" data-action="link">🔗</button>
         <button type="button" data-action="image">🖼️</button>
         <button type="button" data-action="code" id="code-btn">&lt;/&gt;</button>
+        <button id="copy-title-btn" type="button" style="margin-left:1rem;">Copy Title</button>
+        <button id="copy-content-btn" type="button">Copy Content</button>
       </div>
     </div>
 

@@ -1,3 +1,32 @@
+// Copy Title and Content button logic
+window.addEventListener('DOMContentLoaded', function () {
+  const copyTitleBtn = document.getElementById('copy-title-btn');
+  const copyContentBtn = document.getElementById('copy-content-btn');
+  if (copyTitleBtn) {
+    copyTitleBtn.onclick = function () {
+      const title = document.getElementById('title-box')?.value || '';
+      if (title) {
+        navigator.clipboard.writeText(title);
+      }
+    };
+  }
+  if (copyContentBtn) {
+    copyContentBtn.onclick = function () {
+      // Copy the rendered output (HTML or Markdown)
+      const mode = document.querySelector('input[name="mode"]:checked')?.value || 'markdown';
+      if (mode === 'markdown') {
+        // Copy markdown from editor
+        const md = document.getElementById('editor')?.value || '';
+        navigator.clipboard.writeText(md);
+      } else {
+        // Copy HTML from output
+        const html = document.getElementById('output')?.innerHTML || '';
+        // Copy as plain text (HTML source)
+        navigator.clipboard.writeText(html);
+      }
+    };
+  }
+});
 // Simple markdown to HTML converter for preview
 function simpleMarkdownToHtml(md) {
   if (!md) return '';
