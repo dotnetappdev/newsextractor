@@ -31,19 +31,26 @@
         <button id="fetch-article">Fetch</button>
       </div>
       <input id="title-box" type="text" placeholder="Article Title" style="margin-bottom:0.5rem;" readonly />
-      <div id="editor-toolbar">
-        <div class="mode-switch" style="margin-right:1rem;">
-          <label><input type="radio" name="mode" value="markdown" checked> Markdown</label>
-          <label><input type="radio" name="mode" value="html"> HTML</label>
+      <div id="editor-toolbar" style="display: flex; align-items: center;">
+        <div style="display: flex; align-items: center; flex: 1;">
+          <div class="mode-switch" style="margin-right:1rem;">
+            <label><input type="radio" name="mode" value="markdown" checked> Markdown</label>
+            <label><input type="radio" name="mode" value="html"> HTML</label>
+          </div>
+          <button type="button" data-action="bold"><b>B</b></button>
+          <button type="button" data-action="italic"><i>I</i></button>
+          <button type="button" data-action="heading">H</button>
+          <button type="button" data-action="link">🔗</button>
+          <button type="button" data-action="image">🖼️</button>
+          <button type="button" data-action="code" id="code-btn">&lt;/&gt;</button>
+          <button id="copy-title-btn" type="button" style="margin-left:1rem;">Copy Title</button>
+          <button id="copy-content-btn" type="button">Copy Content</button>
         </div>
-        <button type="button" data-action="bold"><b>B</b></button>
-        <button type="button" data-action="italic"><i>I</i></button>
-        <button type="button" data-action="heading">H</button>
-        <button type="button" data-action="link">🔗</button>
-        <button type="button" data-action="image">🖼️</button>
-        <button type="button" data-action="code" id="code-btn">&lt;/&gt;</button>
-        <button id="copy-title-btn" type="button" style="margin-left:1rem;">Copy Title</button>
-        <button id="copy-content-btn" type="button">Copy Content</button>
+        <div style="margin-left:auto;">
+          <label class="theme-switch" style="display: flex; align-items: center; gap: 0.3em; cursor: pointer;">
+            <input type="checkbox" id="theme-toggle" style="margin-right: 0.3em;"> Dark Mode
+          </label>
+        </div>
       </div>
     </div>
 

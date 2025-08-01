@@ -1,3 +1,54 @@
+// Theme toggle logic: use system/browser color scheme by default, but allow user override via toggle and persist in localStorage
+window.addEventListener('DOMContentLoaded', function () {
+  const themeToggle = document.getElementById('theme-toggle');
+  const body = document.body;
+  const THEME_KEY = 'theme-override';
+
+  function setTheme(mode) {
+    if (mode === 'dark') {
+      body.classList.add('dark-mode');
+      body.classList.remove('light-mode');
+      if (themeToggle) themeToggle.checked = true;
+    } else {
+      body.classList.add('light-mode');
+      body.classList.remove('dark-mode');
+      if (themeToggle) themeToggle.checked = false;
+    }
+  }
+
+  function getSystemTheme() {
+    return (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+  }
+
+  // Apply theme on load
+  let override = localStorage.getItem(THEME_KEY);
+  if (override === 'dark' || override === 'light') {
+    setTheme(override);
+  } else {
+    setTheme(getSystemTheme());
+  }
+
+  // Listen for system theme changes if no override
+  if (window.matchMedia) {
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function() {
+      if (!localStorage.getItem(THEME_KEY)) {
+        setTheme(getSystemTheme());
+      }
+    });
+  }
+
+  if (themeToggle) {
+    themeToggle.addEventListener('change', function () {
+      if (themeToggle.checked) {
+        setTheme('dark');
+        localStorage.setItem(THEME_KEY, 'dark');
+      } else {
+        setTheme('light');
+        localStorage.setItem(THEME_KEY, 'light');
+      }
+    });
+  }
+});
 // Copy Title and Content button logic
 window.addEventListener('DOMContentLoaded', function () {
   const copyTitleBtn = document.getElementById('copy-title-btn');

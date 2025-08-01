@@ -1,3 +1,45 @@
+body.light-mode {
+  background: #fff;
+  color: #222;
+}
+body.dark-mode {
+  background: #181a1b;
+  color: #e0e0e0;
+}
+
+body.dark-mode header,
+body.dark-mode #container,
+body.dark-mode .split-container {
+  background: #23272a;
+  color: #e0e0e0;
+}
+body.dark-mode #editor,
+body.dark-mode #editor-toolbar button,
+body.dark-mode #title-box,
+body.dark-mode #input-url {
+  background: #23272a;
+  color: #e0e0e0;
+  border-color: #444;
+}
+body.dark-mode #editor-toolbar button:hover {
+  background: #333;
+}
+body.dark-mode #preview-wrapper {
+  background: #23272a;
+}
+body.dark-mode .split-divider {
+  background: #444;
+}
+body.dark-mode .split-divider.active {
+  background: #666;
+}
+body.dark-mode .split-divider.hover {
+  background: #555;
+}
+body.dark-mode .bbc-footer {
+  background: #23272a;
+  color: #aaa;
+}
 .editor-pane #editor-controls {
   width: 100%;
   display: flex;
