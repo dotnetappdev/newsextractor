@@ -44,7 +44,8 @@ async function fetchAndExtract(url) {
     let text = '';
     if (article) {
       article.querySelectorAll('script, nav, aside, style, noscript, iframe, header, footer, .ad, .ads, .advert').forEach(e => e.remove());
-      text = article.innerText.trim();
+      // Preserve line breaks as markdown (double space + newline)
+      text = article.innerText.replace(/\r?\n/g, '  \n').trim();
     }
     let markdown = `# ${title}\n\n${text}`;
     if (image) markdown = `![image](${image})\n\n` + markdown;
