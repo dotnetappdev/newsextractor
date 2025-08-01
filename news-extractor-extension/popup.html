@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>News Extractor Popup</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div id="editor-toolbar" style="display: flex; align-items: center;">
+    <div style="display: flex; align-items: center; flex: 1;">
+      <button type="button" data-action="bold"><b>B</b></button>
+      <button type="button" data-action="italic"><i>I</i></button>
+      <button type="button" data-action="heading">H</button>
+      <button type="button" data-action="link">🔗</button>
+      <button type="button" data-action="image">🖼️</button>
+      <button type="button" data-action="code" id="code-btn">&lt;/&gt;</button>
+      <div id="theme-switcher" style="display: flex; align-items: center; margin-left: 1rem; gap: 0.5em;">
+        <label style="display: flex; align-items: center; gap: 0.2em;">
+          <input type="radio" name="theme-mode" id="theme-light" value="light"> Light
+        </label>
+        <label style="display: flex; align-items: center; gap: 0.2em;">
+          <input type="radio" name="theme-mode" id="theme-dark" value="dark"> Dark
+        </label>
+      </div>
+      <button id="copy-title-btn" type="button" style="margin-left:1rem;">Copy Title</button>
+      <button id="copy-content-btn" type="button">Copy Content</button>
+    </div>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

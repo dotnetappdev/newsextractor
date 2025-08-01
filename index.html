@@ -26,6 +26,7 @@
     <!-- Controls above split frame -->
     <div id="top-controls">
       <!-- Mode switch moved to toolbar below -->
+      <div id="status" style="color: #c00; font-size: 1em; min-height: 1.2em; margin-bottom: 0.3em;"></div>
       <div class="url-row">
         <input id="input-url" type="text" placeholder="Paste article URL here" />
         <button id="fetch-article">Fetch</button>
@@ -43,13 +44,19 @@
           <button type="button" data-action="link">🔗</button>
           <button type="button" data-action="image">🖼️</button>
           <button type="button" data-action="code" id="code-btn">&lt;/&gt;</button>
+          <div id="theme-switcher" style="display: flex; align-items: center; margin-left: 1rem; gap: 0.5em;">
+            <label style="display: flex; align-items: center; gap: 0.2em;">
+              <input type="radio" name="theme-mode" id="theme-light" value="light"> Light
+            </label>
+            <label style="display: flex; align-items: center; gap: 0.2em;">
+              <input type="radio" name="theme-mode" id="theme-dark" value="dark"> Dark
+            </label>
+          </div>
+          <div id="progress-bar-container" style="width: 120px; height: 8px; background: #eee; border-radius: 4px; overflow: hidden; margin-left: 1rem; display: flex; align-items: center;">
+            <div id="progress-bar" style="height: 100%; width: 0; background: linear-gradient(90deg,#4e8cff,#1e3a8a); transition: width 0.2s;"></div>
+          </div>
           <button id="copy-title-btn" type="button" style="margin-left:1rem;">Copy Title</button>
           <button id="copy-content-btn" type="button">Copy Content</button>
-        </div>
-        <div style="margin-left:auto;">
-          <label class="theme-switch" style="display: flex; align-items: center; gap: 0.3em; cursor: pointer;">
-            <input type="checkbox" id="theme-toggle" style="margin-right: 0.3em;"> Dark Mode
-          </label>
         </div>
       </div>
     </div>
@@ -71,6 +78,12 @@
 
     <!-- Code editor popup is now in news-extractor-code-popup.html -->
     <footer class="bbc-footer">&copy; 2025 News Extractor | Inspired by BBC News</footer>
+    <div id="statusbar" style="position: fixed; left: 0; right: 0; bottom: 0; height: 26px; background: #222; color: #eee; display: flex; align-items: center; font-size: 0.95em; z-index: 100; border-top: 1px solid #444;">
+      <div id="statusbar-linecol" style="padding: 0 1em;">Ln 1, Col 1</div>
+      <div id="statusbar-mode" style="padding: 0 1em; border-left: 1px solid #444;">Markdown</div>
+      <div id="statusbar-caps" style="padding: 0 1em; border-left: 1px solid #444;">CAPS</div>
+      <div id="statusbar-num" style="padding: 0 1em; border-left: 1px solid #444;">NUM</div>
+    </div>
     <!-- CodeMirror and other scripts will be loaded in JS -->
     <script src="news-extractor-web.js"></script>
   </body>

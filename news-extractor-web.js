@@ -1,6 +1,7 @@
 // Theme toggle logic: use system/browser color scheme by default, but allow user override via toggle and persist in localStorage
 window.addEventListener('DOMContentLoaded', function () {
-  const themeToggle = document.getElementById('theme-toggle');
+  const themeLight = document.getElementById('theme-light');
+  const themeDark = document.getElementById('theme-dark');
   const body = document.body;
   const THEME_KEY = 'theme-override';
 
@@ -8,11 +9,13 @@ window.addEventListener('DOMContentLoaded', function () {
     if (mode === 'dark') {
       body.classList.add('dark-mode');
       body.classList.remove('light-mode');
-      if (themeToggle) themeToggle.checked = true;
+      if (themeDark) themeDark.checked = true;
+      if (themeLight) themeLight.checked = false;
     } else {
       body.classList.add('light-mode');
       body.classList.remove('dark-mode');
-      if (themeToggle) themeToggle.checked = false;
+      if (themeLight) themeLight.checked = true;
+      if (themeDark) themeDark.checked = false;
     }
   }
 
@@ -22,11 +25,8 @@ window.addEventListener('DOMContentLoaded', function () {
 
   // Apply theme on load
   let override = localStorage.getItem(THEME_KEY);
-  if (override === 'dark' || override === 'light') {
-    setTheme(override);
-  } else {
-    setTheme(getSystemTheme());
-  }
+  let initialTheme = (override === 'dark' || override === 'light') ? override : getSystemTheme();
+  setTheme(initialTheme);
 
   // Listen for system theme changes if no override
   if (window.matchMedia) {
@@ -37,14 +37,17 @@ window.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  if (themeToggle) {
-    themeToggle.addEventListener('change', function () {
-      if (themeToggle.checked) {
-        setTheme('dark');
-        localStorage.setItem(THEME_KEY, 'dark');
-      } else {
+  if (themeLight && themeDark) {
+    themeLight.addEventListener('change', function () {
+      if (themeLight.checked) {
         setTheme('light');
         localStorage.setItem(THEME_KEY, 'light');
+      }
+    });
+    themeDark.addEventListener('change', function () {
+      if (themeDark.checked) {
+        setTheme('dark');
+        localStorage.setItem(THEME_KEY, 'dark');
       }
     });
   }
@@ -207,11 +210,72 @@ function showProgressBar() {
   const bar = document.getElementById('progress-bar');
   if (bar) bar.style.display = '';
   setProgressBar(10);
+  document.getElementById('progress-bar-container').style.visibility = 'visible';
 }
 function hideProgressBar() {
   const bar = document.getElementById('progress-bar');
   if (bar) bar.style.display = 'none';
   setProgressBar(0);
+  document.getElementById('progress-bar-container').style.visibility = 'hidden';
+  // Hide progress bar initially
+  const progressBarContainer = document.getElementById('progress-bar-container');
+  if (progressBarContainer) progressBarContainer.style.visibility = 'hidden';
+
+  // Status bar logic
+  const editor = document.getElementById('editor');
+  const lineCol = document.getElementById('statusbar-linecol');
+  const modeEl = document.getElementById('statusbar-mode');
+  const capsEl = document.getElementById('statusbar-caps');
+  const numEl = document.getElementById('statusbar-num');
+  let capsOn = false, numOn = false;
+  function updateLineCol() {
+    if (!editor || !lineCol) return;
+    const val = editor.value;
+    const pos = editor.selectionStart;
+    const lines = val.substr(0, pos).split('\n');
+    const ln = lines.length;
+    const col = lines[lines.length-1].length + 1;
+    lineCol.textContent = `Ln ${ln}, Col ${col}`;
+  }
+  if (editor) {
+    editor.addEventListener('keyup', updateLineCol);
+    editor.addEventListener('click', updateLineCol);
+    editor.addEventListener('input', updateLineCol);
+    updateLineCol();
+  }
+  // Mode
+  const modeRadios = document.querySelectorAll('input[name="mode"]');
+  function updateMode() {
+    if (!modeEl) return;
+    const checked = Array.from(modeRadios).find(r=>r.checked);
+    modeEl.textContent = checked ? (checked.value==='html'?'HTML':'Markdown') : '';
+  }
+  modeRadios.forEach(r=>r.addEventListener('change', updateMode));
+  updateMode();
+  // Caps lock
+  window.addEventListener('keydown', e => {
+    if (e.getModifierState && capsEl) {
+      capsOn = e.getModifierState('CapsLock');
+      capsEl.textContent = capsOn ? 'CAPS' : '';
+    }
+    if (e.getModifierState && numEl) {
+      numOn = e.getModifierState('NumLock');
+      numEl.textContent = numOn ? 'NUM' : '';
+    }
+  });
+  window.addEventListener('keyup', e => {
+    if (e.getModifierState && capsEl) {
+      capsOn = e.getModifierState('CapsLock');
+      capsEl.textContent = capsOn ? 'CAPS' : '';
+    }
+    if (e.getModifierState && numEl) {
+      numOn = e.getModifierState('NumLock');
+      numEl.textContent = numOn ? 'NUM' : '';
+    }
+  });
+  // Initial state
+  if (capsEl) capsEl.textContent = (window.getModifierState && window.getModifierState('CapsLock')) ? 'CAPS' : '';
+  if (numEl) numEl.textContent = (window.getModifierState && window.getModifierState('NumLock')) ? 'NUM' : '';
 }
 function setProgressBar(percent) {
   const inner = document.querySelector('.progress-bar-inner');
