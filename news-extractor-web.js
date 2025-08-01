@@ -283,7 +283,7 @@ function setProgressBar(percent) {
   if (bar) bar.style.width = percent + '%';
   if (label) {
     if (percent === 0) label.textContent = 'Idle';
-    else if (percent < 100) label.textContent = `Fetching ${percent}%`;
+    else if (percent < 100) label.textContent = `Fetching: ${percent}%`;
     else label.textContent = 'Done';
   }
 }
