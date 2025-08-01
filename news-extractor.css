@@ -1,3 +1,55 @@
+.editor-pane #editor-controls {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  margin: 1rem 0 0.5rem 0;
+}
+#title-box {
+  flex: 1 1 180px;
+  font-size: 1.1rem;
+  padding: 0.5rem 0.7rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: #fff;
+}
+#input-url {
+  flex: 2 1 320px;
+  font-size: 1.1rem;
+  padding: 0.5rem 0.7rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: #fff;
+}
+#fetch-article {
+  padding: 0.5rem 1.2rem;
+  font-size: 1.1rem;
+  background: #f8f8f8;
+  color: #222;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+#fetch-article:hover {
+  background: #e0e0e0;
+}
+#editor-toolbar {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+#editor-toolbar button {
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 0.3rem 0.7rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+#editor-toolbar button:hover {
+  background: #f0f0f0;
+}
 html, body {
   height: 100%;
   margin: 0;
