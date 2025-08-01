@@ -65,8 +65,11 @@ document.getElementById('fetch-article').onclick = async () => {
   if (!url) return setStatus('Enter a URL.');
   const result = await fetchAndExtract(url);
   document.getElementById('title').value = result.title || '';
-  document.getElementById('url').value = url;
-  document.getElementById('markdown').value = result.markdown || '';
+  // URL box removed, but keep for copy button compatibility if needed
+  // document.getElementById('url').value = url;
+  // Insert URL as first line in markdown
+  let markdownWithUrl = url ? `${url}\n\n${result.markdown || ''}` : (result.markdown || '');
+  document.getElementById('markdown').value = markdownWithUrl;
   if (result.image) {
     document.getElementById('image-container').innerHTML = `<img src="${result.image}" alt="Article Image">`;
   } else {

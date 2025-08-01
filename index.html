@@ -18,16 +18,12 @@
       <div class="progress-bar-inner"></div>
     </div>
     <div class="bbc-content-row">
-      <div class="bbc-center-col">
-        <label for="url">URL</label>
-        <textarea id="url" readonly style="min-height:60px;font-size:1.1em;"></textarea>
-        <button id="copy-url" class="bbc-btn">Copy URL</button>
-      </div>
+      <!-- URL box removed as requested -->
       <div class="bbc-right-col">
         <label for="title">Title</label>
         <textarea id="title" readonly style="min-height:60px;font-size:1.1em;"></textarea>
         <button id="copy-title" class="bbc-btn">Copy Title</button>
-        <label for="markdown">Article (Markdown)</label>
+        <label for="markdown">Article (Markdown, includes URL as first line)</label>
         <div class="md-toolbar">
           <button type="button" class="md-btn" onclick="formatMarkdown('bold')"><b>B</b></button>
           <button type="button" class="md-btn" onclick="formatMarkdown('italic')"><i>I</i></button>
