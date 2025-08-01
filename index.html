@@ -9,51 +9,32 @@
   <header class="bbc-header">
     <div class="bbc-logo">NEWS EXTRACTOR</div>
   </header>
-  <main class="bbc-main">
-    <div class="bbc-url-row">
-      <label for="title">Title</label>
-      <textarea id="title" readonly style="min-height:40px;font-size:1.1em;"></textarea>
-      <label for="input-url">URL</label>
+  <main>
+    <div class="url-bar">
       <input id="input-url" type="text" placeholder="Paste article URL here" />
       <button id="fetch-article" class="bbc-btn bbc-btn-main">Fetch & Extract</button>
     </div>
     <div id="progress-bar" class="progress-bar" style="display:none;">
       <div class="progress-bar-inner"></div>
     </div>
-    <div class="bbc-content-row">
-      <div class="bbc-left-col bbc-left-align">
-        <label for="title">Title</label>
-        <textarea id="title" readonly style="min-height:60px;font-size:1.1em;"></textarea>
-        <button id="copy-title" class="bbc-btn">Copy Title</button>
-        <label for="markdown">Article (Markdown, includes URL as first line)</label>
-        <div class="md-toolbar">
-          <button type="button" class="md-btn" onclick="formatMarkdown('bold')"><b>B</b></button>
-          <button type="button" class="md-btn" onclick="formatMarkdown('italic')"><i>I</i></button>
-          <button type="button" class="md-btn" onclick="formatMarkdown('h1')">H1</button>
-          <button type="button" class="md-btn" onclick="formatMarkdown('h2')">H2</button>
-          <button type="button" class="md-btn" onclick="formatMarkdown('img')">Img</button>
+    <div class="mlp-container">
+      <div class="mlp-editor-panel">
+        <div class="mlp-toolbar">
+          <button type="button" data-action="bold"><b>B</b></button>
+          <button type="button" data-action="italic"><i>I</i></button>
+          <button type="button" data-action="heading">H</button>
+          <button type="button" data-action="link">🔗</button>
+          <button type="button" data-action="image">🖼️</button>
         </div>
-        <div class="editor-preview-row">
-          <div class="editor-with-lines">
-            <div class="line-numbers" id="line-numbers"></div>
-            <textarea id="markdown" class="editor-textarea"></textarea>
-          </div>
-          <div id="markdown-preview" class="markdown-preview"></div>
-        </div>
-        <button id="copy-markdown" class="bbc-btn">Copy Markdown</button>
-        <label for="article-text">Extracted Article Text (appended to markdown)</label>
-        <textarea id="article-text" style="min-height:120px;font-size:1em;" readonly></textarea>
-        <label>Image</label>
-        <div id="image-container"></div>
-        <!-- Removed Copy Title+URL button as requested -->
-        <div id="status"></div>
-      </div>
-      <div class="bbc-preview-area wide-preview">
-        <div class="bbc-preview-section">
-          <h3>Markdown Preview (HTML Rendered)</h3>
-          <div id="markdown-preview" class="markdown-preview"></div>
+        <div class="mlp-editor-wrapper">
+          <div class="mlp-line-numbers" id="line-numbers"></div>
+          <textarea id="markdown-editor" class="mlp-editor" placeholder="Write your markdown here..."></textarea>
         </div>
       </div>
+      <div class="mlp-preview-panel">
+        <div id="preview" class="mlp-preview"></div>
+      </div>
+    </div>
   <script>
     // Ensure preview updates on page load
     window.addEventListener('DOMContentLoaded', function() {
