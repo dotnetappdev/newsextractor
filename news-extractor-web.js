@@ -1,3 +1,23 @@
+// Simple markdown to HTML converter for preview
+function simpleMarkdownToHtml(md) {
+  if (!md) return '';
+  let html = md
+    .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+    .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+    .replace(/\*\*(.*?)\*\*/gim, '<b>$1</b>')
+    .replace(/\*(.*?)\*/gim, '<i>$1</i>')
+    .replace(/!\[.*?\]\((.*?)\)/gim, '<img src="$1" style="max-width:100%;max-height:180px;" />')
+    .replace(/\n/g, '<br>');
+  // Convert links
+  html = html.replace(/\[([^\]]+)\]\(([^\)]+)\)/gim, '<a href="$2" target="_blank">$1</a>');
+  return html;
+}
+
+function updateMarkdownPreview() {
+  const md = document.getElementById('markdown').value;
+  document.getElementById('markdown-preview').innerHTML = simpleMarkdownToHtml(md);
+}
+
 // News Extractor Web Version
 async function fetchAndExtract(url) {
   setStatus('Fetching...');
@@ -70,6 +90,7 @@ document.getElementById('fetch-article').onclick = async () => {
   // Insert URL as first line in markdown
   let markdownWithUrl = url ? `${url}\n\n${result.markdown || ''}` : (result.markdown || '');
   document.getElementById('markdown').value = markdownWithUrl;
+  updateMarkdownPreview();
   if (result.image) {
     document.getElementById('image-container').innerHTML = `<img src="${result.image}" alt="Article Image">`;
   } else {
@@ -80,7 +101,9 @@ document.getElementById('fetch-article').onclick = async () => {
 
 document.getElementById('copy-title').onclick = () => copyToClipboard('title');
 document.getElementById('copy-url').onclick = () => copyToClipboard('url');
+
 document.getElementById('copy-markdown').onclick = () => copyToClipboard('markdown');
+document.getElementById('markdown').addEventListener('input', updateMarkdownPreview);
 
 // Markdown formatting toolbar logic
 window.formatMarkdown = function(type) {
@@ -116,6 +139,7 @@ window.formatMarkdown = function(type) {
   textarea.value = before + insert + after;
   textarea.focus();
   textarea.selectionStart = textarea.selectionEnd = before.length + insert.length;
+  updateMarkdownPreview();
 };
 document.getElementById('copy-title-url').onclick = () => {
   const title = document.getElementById('title').value;
