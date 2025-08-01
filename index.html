@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <!DOCTYPE html>
 <html lang="en">
@@ -25,9 +25,11 @@
     <div id="container" class="split-container">
       <div id="edit" class="column editor-pane">
         <div id="editor-controls">
-          <input id="title-box" type="text" placeholder="Article Title" />
-          <input id="input-url" type="text" placeholder="Paste article URL here" />
-          <button id="fetch-article">Fetch</button>
+          <input id="title-box" type="text" placeholder="Article Title" style="width:100%;margin-bottom:0.5rem;" />
+          <div style="display:flex;gap:0.5rem;width:100%;margin-bottom:0.5rem;">
+            <input id="input-url" type="text" placeholder="Paste article URL here" style="flex:1;" />
+            <button id="fetch-article">Fetch</button>
+          </div>
         </div>
         <div id="editor-toolbar">
           <button type="button" data-action="bold"><b>B</b></button>
