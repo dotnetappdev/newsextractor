@@ -54,6 +54,42 @@ document.getElementById('fetch-article').onclick = async () => {
 document.getElementById('copy-title').onclick = () => copyToClipboard('title');
 document.getElementById('copy-url').onclick = () => copyToClipboard('url');
 document.getElementById('copy-markdown').onclick = () => copyToClipboard('markdown');
+
+// Markdown formatting toolbar logic
+window.formatMarkdown = function(type) {
+  const textarea = document.getElementById('markdown');
+  const start = textarea.selectionStart;
+  const end = textarea.selectionEnd;
+  let value = textarea.value;
+  let before = value.substring(0, start);
+  let selected = value.substring(start, end);
+  let after = value.substring(end);
+  let insert = '';
+  switch(type) {
+    case 'bold':
+      insert = `**${selected || 'bold text'}**`;
+      break;
+    case 'italic':
+      insert = `*${selected || 'italic text'}*`;
+      break;
+    case 'h1':
+      insert = `# ${selected || 'Heading 1'}`;
+      break;
+    case 'h2':
+      insert = `## ${selected || 'Heading 2'}`;
+      break;
+    case 'img':
+      const url = prompt('Enter image URL:');
+      if (url) insert = `![image](${url})`;
+      else return;
+      break;
+    default:
+      return;
+  }
+  textarea.value = before + insert + after;
+  textarea.focus();
+  textarea.selectionStart = textarea.selectionEnd = before.length + insert.length;
+};
 document.getElementById('copy-title-url').onclick = () => {
   const title = document.getElementById('title').value;
   const url = document.getElementById('url').value;
