@@ -32,6 +32,8 @@
         </div>
         <textarea id="markdown" style="min-height:220px;font-size:1.1em;"></textarea>
         <button id="copy-markdown" class="bbc-btn">Copy Markdown</button>
+        <label for="article-text">Extracted Article Text (appended to markdown)</label>
+        <textarea id="article-text" style="min-height:120px;font-size:1em;" readonly></textarea>
         <label>Image</label>
         <div id="image-container"></div>
         <!-- Removed Copy Title+URL button as requested -->
@@ -39,10 +41,16 @@
       </div>
       <div class="bbc-preview-area wide-preview">
         <div class="bbc-preview-section">
-          <h3>Markdown Preview</h3>
+          <h3>Markdown Preview (HTML Rendered)</h3>
           <div id="markdown-preview" class="markdown-preview"></div>
         </div>
       </div>
+  <script>
+    // Ensure preview updates on page load
+    window.addEventListener('DOMContentLoaded', function() {
+      if (window.updateMarkdownPreview) window.updateMarkdownPreview();
+    });
+  </script>
     </div>
   </main>
   <footer class="bbc-footer">&copy; 2025 News Extractor | Inspired by BBC News</footer>

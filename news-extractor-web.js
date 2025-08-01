@@ -35,13 +35,16 @@ async function fetchAndExtract(url) {
     let article = doc.querySelector('article') || doc.querySelector('main') || doc.body;
     let title = doc.querySelector('meta[property="og:title"]')?.content || doc.title;
     let image = doc.querySelector('meta[property="og:image"]')?.content || '';
+    let description = doc.querySelector('meta[name="description"]')?.content || doc.querySelector('meta[property="og:description"]')?.content || '';
     let text = '';
     if (article) {
       article.querySelectorAll('script, nav, aside, style, noscript, iframe, header, footer, .ad, .ads, .advert').forEach(e => e.remove());
       // Preserve line breaks as markdown (double space + newline)
       text = article.innerText.replace(/\r?\n/g, '  \n').trim();
     }
-    let markdown = `# ${title}\n\n${text}`;
+    let markdown = `# ${title}\n`;
+    if (description) markdown += `\n> ${description}\n`;
+    markdown += `\n${text}`;
     if (image) markdown = `![image](${image})\n\n` + markdown;
     setProgressBar(100);
     setTimeout(hideProgressBar, 500);
@@ -86,11 +89,15 @@ document.getElementById('fetch-article').onclick = async () => {
   if (!url) return setStatus('Enter a URL.');
   const result = await fetchAndExtract(url);
   document.getElementById('title').value = result.title || '';
-  // URL box removed, but keep for copy button compatibility if needed
-  // document.getElementById('url').value = url;
   // Insert URL as first line in markdown
   let markdownWithUrl = url ? `${url}\n\n${result.markdown || ''}` : (result.markdown || '');
+  // Append article text to markdown
+  if (result.markdown && result.markdown !== '') {
+    markdownWithUrl += `\n\n${result.markdown}`;
+  }
   document.getElementById('markdown').value = markdownWithUrl;
+  // Show extracted article text in its own box
+  document.getElementById('article-text').value = result.markdown || '';
   updateMarkdownPreview();
   if (result.image) {
     document.getElementById('image-container').innerHTML = `<img src="${result.image}" alt="Article Image">`;
