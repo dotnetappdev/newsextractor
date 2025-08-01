@@ -1,5 +1,81 @@
 // Theme toggle logic: use system/browser color scheme by default, but allow user override via toggle and persist in localStorage
 window.addEventListener('DOMContentLoaded', function () {
+// Tab switching logic for preview/puppeteer on right pane
+window.addEventListener('DOMContentLoaded', function () {
+  const tabPreview = document.getElementById('tab-preview');
+  const tabPuppeteer = document.getElementById('tab-puppeteer');
+  const contentPreview = document.getElementById('tab-content-preview');
+  const contentPuppeteer = document.getElementById('tab-content-puppeteer');
+  if (tabPreview && tabPuppeteer && contentPreview && contentPuppeteer) {
+    tabPreview.onclick = function() {
+      tabPreview.style.background = '#222';
+      tabPuppeteer.style.background = '#333';
+      contentPreview.style.display = '';
+      contentPuppeteer.style.display = 'none';
+    };
+    tabPuppeteer.onclick = function() {
+      tabPreview.style.background = '#333';
+      tabPuppeteer.style.background = '#222';
+      contentPreview.style.display = 'none';
+      contentPuppeteer.style.display = '';
+
+      // Simulate Puppeteer extraction and insert into editor
+      // Example article data
+      const article = {
+        title: 'Storm Floris NI Weather Breaking News',
+        image: 'https://placehold.co/600x200',
+        body: 'Storm Floris is set to bring heavy rain and strong winds to Northern Ireland. The Met Office has issued a yellow weather warning...'
+      };
+      const modeRadio = document.querySelector('input[name="mode"]:checked');
+      const mode = modeRadio ? modeRadio.value : 'markdown';
+      let content = '';
+      if (mode === 'markdown') {
+        content = `${article.image ? `![image](${article.image})\n\n` : ''}# ${article.title}\n\n${article.body}`;
+      } else {
+        content = `${article.image ? `<img src=\"${article.image}\" alt=\"image\" style=\"max-width:100%\"/><br/>` : ''}<h1>${article.title}</h1><p>${article.body}</p>`;
+      }
+      // Insert into editor and title box
+      const editor = document.getElementById('editor');
+      const titleBox = document.getElementById('title-box');
+      if (editor) editor.value = content;
+      if (titleBox) titleBox.value = article.title;
+      // Optionally update preview
+      if (typeof updateMarkdownPreview === 'function') updateMarkdownPreview();
+    };
+  }
+
+  // Clear Data button logic
+  const clearBtn = document.getElementById('clear-data');
+  if (clearBtn) {
+    clearBtn.onclick = function() {
+      const editor = document.getElementById('editor');
+      const titleBox = document.getElementById('title-box');
+      const inputUrl = document.getElementById('input-url');
+      if (editor) editor.value = '';
+      if (titleBox) titleBox.value = '';
+      if (inputUrl) inputUrl.value = '';
+      if (typeof updateMarkdownPreview === 'function') updateMarkdownPreview();
+    };
+  }
+  // Simulate Puppeteer results for demo
+  const puppeteerResults = document.getElementById('puppeteer-results');
+  if (puppeteerResults) {
+    puppeteerResults.innerHTML = `
+      <div style="margin-bottom:2em;">
+        <h3>Example Article 1</h3>
+        <img src="https://placehold.co/600x200" style="max-width:100%;margin-bottom:1em;"/>
+        <div><b>Title:</b> Storm Floris NI Weather Breaking News</div>
+        <div><b>Body:</b> <p>Storm Floris is set to bring heavy rain and strong winds to Northern Ireland. The Met Office has issued a yellow weather warning...</p></div>
+      </div>
+      <div style="margin-bottom:2em;">
+        <h3>Example Article 2</h3>
+        <img src="https://placehold.co/600x200/EEE/333?text=Article+2" style="max-width:100%;margin-bottom:1em;"/>
+        <div><b>Title:</b> Belfast City Centre Floods</div>
+        <div><b>Body:</b> <p>Flooding has caused major disruption in Belfast city centre, with roads closed and public transport affected...</p></div>
+      </div>
+    `;
+  }
+});
   const themeLight = document.getElementById('theme-light');
   const themeDark = document.getElementById('theme-dark');
   const body = document.body;

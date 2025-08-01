@@ -25,11 +25,11 @@
 
     <!-- Controls above split frame -->
     <div id="top-controls">
-      <!-- Mode switch moved to toolbar below -->
       <div id="status" style="color: #c00; font-size: 1em; min-height: 1.2em; margin-bottom: 0.3em;"></div>
       <div class="url-row">
         <input id="input-url" type="text" placeholder="Paste article URL here" />
         <button id="fetch-article">Fetch</button>
+        <button id="clear-data" type="button" style="margin-left:0.5em;">Clear Data</button>
       </div>
       <input id="title-box" type="text" placeholder="Article Title" style="margin-bottom:0.5rem;" readonly />
       <div id="editor-toolbar" style="display: flex; align-items: center;">
@@ -57,6 +57,32 @@
             <div id="progress-bar" style="height: 100%; width: 0; background: linear-gradient(90deg,#4e8cff,#1e3a8a); transition: width 0.2s;"></div>
             <button id="copy-title-btn" type="button" style="margin-left:1rem; height: 22px; font-size: 0.95em;">Copy Title</button>
             <button id="copy-content-btn" type="button" style="margin-left:10px; height: 22px; font-size: 0.95em;">Copy Content</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="container" class="split-container">
+      <div id="edit" class="column editor-pane">
+        <div id="editor-wrapper">
+          <textarea id="editor" placeholder="Write your markdown or HTML here..." required></textarea>
+          <div id="editor-error" style="color:red;display:none;font-size:0.95em;margin-top:4px;"></div>
+        </div>
+      </div>
+      <div id="split-divider" class="split-divider"></div>
+      <div id="preview" class="column preview-pane" style="display: flex; flex-direction: column; height: 100%;">
+        <div id="tab-controls" style="display: flex; border-bottom: 1px solid #444;">
+          <button id="tab-preview" class="tab-btn" style="padding: 0.5em 1.2em; border: none; background: #222; color: #fff; cursor: pointer; border-top-left-radius: 6px; border-top-right-radius: 6px;">Preview</button>
+          <button id="tab-puppeteer" class="tab-btn" style="padding: 0.5em 1.2em; border: none; background: #333; color: #fff; cursor: pointer; border-top-left-radius: 6px; border-top-right-radius: 6px;">Puppeteer Results</button>
+        </div>
+        <div id="tab-content-preview" style="flex:1; overflow:auto;">
+          <div id="preview-wrapper">
+            <div id="output" class="content markdown-body"></div>
+          </div>
+        </div>
+        <div id="tab-content-puppeteer" style="display:none; flex:1; overflow:auto; background:#181a1b; color:#eee; padding:2em;">
+          <h2>Puppeteer Extraction Results (Simulated)</h2>
+          <div id="puppeteer-results">
+            <!-- Puppeteer results will be injected here -->
           </div>
         </div>
       </div>
