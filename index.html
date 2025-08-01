@@ -13,22 +13,24 @@
     <input id="input-url" type="text" placeholder="Paste article URL here" class="mlp-url-input">
     <button id="fetch-article" class="mlp-url-btn">Fetch</button>
   </div>
-  <div class="mlp-main-row">
-    <div class="mlp-editor-panel">
-      <div class="mlp-toolbar">
-        <button type="button" data-action="bold">B</button>
-        <button type="button" data-action="italic">I</button>
-        <button type="button" data-action="heading">H</button>
-        <button type="button" data-action="link">🔗</button>
-        <button type="button" data-action="image">🖼️</button>
+  <div class="mlp-outer-row">
+    <div class="mlp-main-row">
+      <div class="mlp-editor-panel">
+        <div class="mlp-toolbar">
+          <button type="button" data-action="bold">B</button>
+          <button type="button" data-action="italic">I</button>
+          <button type="button" data-action="heading">H</button>
+          <button type="button" data-action="link">🔗</button>
+          <button type="button" data-action="image">🖼️</button>
+        </div>
+        <div class="mlp-editor-wrap">
+          <div id="line-numbers" class="mlp-line-numbers"></div>
+          <textarea id="markdown-editor" class="mlp-editor" placeholder="Write your markdown here..."></textarea>
+        </div>
       </div>
-      <div class="mlp-editor-wrap">
-        <div id="line-numbers" class="mlp-line-numbers"></div>
-        <textarea id="markdown-editor" class="mlp-editor" placeholder="Write your markdown here..."></textarea>
+      <div class="mlp-preview-panel">
+        <div id="preview" class="mlp-preview"></div>
       </div>
-    </div>
-    <div class="mlp-preview-panel">
-      <div id="preview" class="mlp-preview"></div>
     </div>
   </div>
   <script src="news-extractor-web.js"></script>

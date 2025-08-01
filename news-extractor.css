@@ -204,35 +204,44 @@ body {
   min-width: 400px;
   max-width: 700px;
 }
-.bbc-content-row {
-  display: flex;
-  gap: 32px;
-  justify-content: flex-start;
-  align-items: flex-start;
+/* Outer row: full viewport height, relative for absolute children */
+.mlp-outer-row {
+  position: relative;
+  width: 100vw;
+  height: calc(100vh - 110px);
+  min-height: 500px;
 }
-.bbc-left-col {
-  flex: 0 0 420px;
+/* Main row: fixed width, centered horizontally, full height */
+.mlp-main-row {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  display: flex;
+  width: 1200px;
+  height: 100%;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.03);
+  overflow: hidden;
+}
+.mlp-editor-panel {
+  width: 600px;
+  min-width: 0;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  background: #f9f9f9;
-  border-radius: 8px;
-  padding: 24px 16px;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
-  margin-right: 18px;
-  min-width: 340px;
-  max-width: 480px;
+  background: #fafbfc;
+  border-right: 1px solid #e0e0e0;
+  height: 100%;
 }
-.bbc-left-align {
-  align-items: flex-start !important;
-}
-.bbc-preview-area {
-  flex: 1 1 420px;
+.mlp-preview-panel {
+  width: 600px;
+  min-width: 0;
+  background: #fff;
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  min-width: 340px;
-  max-width: 600px;
+  height: 100%;
 }
 .bbc-preview-section {
   background: #fff;
