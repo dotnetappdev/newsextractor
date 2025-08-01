@@ -25,7 +25,8 @@ async function fetchAndExtract(url) {
   try {
     // Animate progress bar to 40% while fetching
     setProgressBar(40);
-    const res = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`);
+    // Use a faster CORS proxy (try corsproxy.io)
+    const res = await fetch(`https://corsproxy.io/?${encodeURIComponent(url)}`);
     setProgressBar(70);
     const data = await res.json();
     setProgressBar(85);
@@ -84,36 +85,52 @@ function copyToClipboard(id) {
   setStatus('Copied!');
 }
 
-document.getElementById('fetch-article').onclick = async () => {
-  const url = document.getElementById('input-url').value;
-  if (!url) return setStatus('Enter a URL.');
-  const result = await fetchAndExtract(url);
-  document.getElementById('title').value = result.title || '';
-  // Insert URL as first line in markdown
-  let markdownWithUrl = url ? `${url}\n\n${result.markdown || ''}` : (result.markdown || '');
-  // Append article text to markdown
-  if (result.markdown && result.markdown !== '') {
-    markdownWithUrl += `\n\n${result.markdown}`;
-  }
-  document.getElementById('markdown').value = markdownWithUrl;
-  // Show extracted article text in its own box
-  document.getElementById('article-text').value = result.markdown || '';
-  updateMarkdownPreview();
-  if (result.image) {
-    document.getElementById('image-container').innerHTML = `<img src="${result.image}" alt="Article Image">`;
-  } else {
-    document.getElementById('image-container').innerHTML = '';
-  }
-  setStatus('Done!');
-};
 
-document.getElementById('copy-title').onclick = () => copyToClipboard('title');
-document.getElementById('copy-url').onclick = () => copyToClipboard('url');
+window.addEventListener('DOMContentLoaded', function() {
+  const fetchBtn = document.getElementById('fetch-article');
+  if (fetchBtn) {
+    fetchBtn.onclick = async () => {
+      const url = document.getElementById('input-url').value;
+      if (!url) return setStatus('Enter a URL.');
+      const result = await fetchAndExtract(url);
+      const titleBox = document.getElementById('title');
+      if (titleBox) titleBox.value = result.title || '';
+      // Insert URL as first line in markdown
+      let markdownWithUrl = url ? `${url}\n\n${result.markdown || ''}` : (result.markdown || '');
+      // Append article text to markdown
+      if (result.markdown && result.markdown !== '') {
+        markdownWithUrl += `\n\n${result.markdown}`;
+      }
+      const mdBox = document.getElementById('markdown');
+      if (mdBox) mdBox.value = markdownWithUrl;
+      // Show extracted article text in its own box
+      const artBox = document.getElementById('article-text');
+      if (artBox) artBox.value = result.markdown || '';
+      updateMarkdownPreview();
+      const imgBox = document.getElementById('image-container');
+      if (imgBox) {
+        if (result.image) {
+          imgBox.innerHTML = `<img src="${result.image}" alt="Article Image">`;
+        } else {
+          imgBox.innerHTML = '';
+        }
+      }
+      setStatus('Done!');
+    };
+  }
+  // Always update preview on load
+  updateMarkdownPreview();
+});
 
 document.getElementById('copy-markdown').onclick = () => copyToClipboard('markdown');
 document.getElementById('markdown').addEventListener('input', updateMarkdownPreview);
-// Initial preview update
-updateMarkdownPreview();
+
+const copyTitleBtn = document.getElementById('copy-title');
+if (copyTitleBtn) copyTitleBtn.onclick = () => copyToClipboard('title');
+const copyMarkdownBtn = document.getElementById('copy-markdown');
+if (copyMarkdownBtn) copyMarkdownBtn.onclick = () => copyToClipboard('markdown');
+const mdBox = document.getElementById('markdown');
+if (mdBox) mdBox.addEventListener('input', updateMarkdownPreview);
 
 // Markdown formatting toolbar logic
 window.formatMarkdown = function(type) {
