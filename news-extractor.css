@@ -6,6 +6,41 @@
   display: flex;
   flex-direction: row;
 }
+.bbc-preview-area {
+  flex: 2 1 800px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-width: 500px;
+  max-width: 1200px;
+}
+.bbc-preview-section {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  padding: 24px 24px 18px 24px;
+  margin-bottom: 8px;
+}
+.bbc-preview-section h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  color: #b80000;
+  font-size: 1.3em;
+  font-weight: bold;
+}
+.markdown-preview {
+  width: 100%;
+  min-height: 220px;
+  background: #f7f7f7;
+  border: 1.5px solid #ccc;
+  border-radius: 6px;
+  padding: 20px;
+  font-size: 1.15em;
+  color: #222;
+  overflow-x: auto;
+  margin-top: 0;
+  white-space: pre-wrap;
+}
 .progress-bar {
   width: 100%;
   background: #eee;

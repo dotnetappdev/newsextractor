@@ -1,8 +1,3 @@
-function updateRedditPreview() {
-  // For Reddit, just show the markdown as plain text (Reddit renders markdown natively)
-  const md = document.getElementById('markdown').value;
-  document.getElementById('reddit-preview').textContent = md;
-}
 // Simple markdown to HTML converter for preview
 function simpleMarkdownToHtml(md) {
   if (!md) return '';
@@ -21,7 +16,6 @@ function simpleMarkdownToHtml(md) {
 function updateMarkdownPreview() {
   const md = document.getElementById('markdown').value;
   document.getElementById('markdown-preview').innerHTML = simpleMarkdownToHtml(md);
-  updateRedditPreview();
 }
 
 // News Extractor Web Version
