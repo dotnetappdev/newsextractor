@@ -159,8 +159,12 @@ window.addEventListener('DOMContentLoaded', function() {
       const url = document.getElementById('input-url').value;
       if (!url) return;
       const result = await fetchAndExtract(url);
-      // Compose markdown: title first line, image second (if any), then article body
+      // Set the title box to the fetched title
+      const titleBox = document.getElementById('title-box');
+      if (titleBox) titleBox.value = result.title || '';
+      // Compose markdown: url first line, then title, image, then article body
       let markdown = '';
+      if (url) markdown += url + '\n';
       if (result.title) markdown += `# ${result.title}\n`;
       if (result.image) markdown += `![image](${result.image})\n`;
       if (result.markdown) markdown += `\n${result.markdown}`;
@@ -169,9 +173,32 @@ window.addEventListener('DOMContentLoaded', function() {
       updateMarkdownPreview();
     };
   }
-  // Live preview on input
+  // Live preview on input and validate body
   const mdBox = document.getElementById('editor');
-  if (mdBox) mdBox.addEventListener('input', updateMarkdownPreview);
+  const errorDiv = document.getElementById('editor-error');
+  function validateBody() {
+    if (!mdBox) return true;
+    const value = mdBox.value.trim();
+    // Require at least 20 non-whitespace characters in the body (excluding url and title lines)
+    const lines = value.split('\n');
+    let body = lines.slice(2).join('\n').replace(/\s/g, '');
+    if (body.length < 20) {
+      if (errorDiv) {
+        errorDiv.textContent = 'Article body must be at least 20 characters.';
+        errorDiv.style.display = '';
+      }
+      return false;
+    } else {
+      if (errorDiv) errorDiv.style.display = 'none';
+      return true;
+    }
+  }
+  if (mdBox) {
+    mdBox.addEventListener('input', function() {
+      updateMarkdownPreview();
+      validateBody();
+    });
+  }
   updateMarkdownPreview();
 });
 
