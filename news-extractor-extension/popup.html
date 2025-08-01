@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>News Extractor</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div id="container">
+    <h2>News Extractor</h2>
+    <label>Title</label>
+    <textarea id="title" readonly></textarea>
+    <button id="copy-title">Copy Title</button>
+    <label>URL</label>
+    <textarea id="url" readonly></textarea>
+    <button id="copy-url">Copy URL</button>
+    <label>Article (Markdown)</label>
+    <textarea id="markdown" readonly></textarea>
+    <button id="copy-markdown">Copy Markdown</button>
+    <label>Image</label>
+    <div id="image-container"></div>
+    <button id="copy-title-url">Copy Title+URL</button>
+    <div id="status"></div>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

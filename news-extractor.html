@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>News Extractor Web</title>
+  <link rel="stylesheet" href="news-extractor.css">
+</head>
+<body>
+  <div id="container">
+    <h2>News Extractor (Web)</h2>
+    <label>Paste Article URL</label>
+    <input id="input-url" type="text" placeholder="https://news.example.com/article" style="width:100%" />
+    <button id="fetch-article">Fetch & Extract</button>
+    <label>Title</label>
+    <textarea id="title" readonly></textarea>
+    <button id="copy-title">Copy Title</button>
+    <label>URL</label>
+    <textarea id="url" readonly></textarea>
+    <button id="copy-url">Copy URL</button>
+    <label>Article (Markdown)</label>
+    <textarea id="markdown" readonly></textarea>
+    <button id="copy-markdown">Copy Markdown</button>
+    <label>Image</label>
+    <div id="image-container"></div>
+    <button id="copy-title-url">Copy Title+URL</button>
+    <div id="status"></div>
+  </div>
+  <script src="news-extractor-web.js"></script>
+</body>
+</html>
