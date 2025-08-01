@@ -13,34 +13,74 @@ window.addEventListener('DOMContentLoaded', function () {
       contentPreview.style.display = '';
       contentPuppeteer.style.display = 'none';
     };
-    tabPuppeteer.onclick = function() {
+    tabPuppeteer.onclick = async function() {
       tabPreview.style.background = '#333';
       tabPuppeteer.style.background = '#222';
       contentPreview.style.display = 'none';
       contentPuppeteer.style.display = '';
 
-      // Simulate Puppeteer extraction and insert into editor
-      // Example article data
-      const article = {
-        title: 'Storm Floris NI Weather Breaking News',
-        image: 'https://placehold.co/600x200',
-        body: 'Storm Floris is set to bring heavy rain and strong winds to Northern Ireland. The Met Office has issued a yellow weather warning...'
-      };
-      const modeRadio = document.querySelector('input[name="mode"]:checked');
-      const mode = modeRadio ? modeRadio.value : 'markdown';
-      let content = '';
-      if (mode === 'markdown') {
-        content = `${article.image ? `![image](${article.image})\n\n` : ''}# ${article.title}\n\n${article.body}`;
+      // Get URL from input field and extract with Puppeteer API
+      const inputUrl = document.getElementById('input-url');
+      const url = inputUrl ? inputUrl.value : '';
+      
+      if (url) {
+        try {
+          const result = await fetchAndExtract(url);
+          const modeRadio = document.querySelector('input[name="mode"]:checked');
+          const mode = modeRadio ? modeRadio.value : 'markdown';
+          let content = '';
+          
+          if (mode === 'markdown') {
+            content = result.markdown;
+          } else {
+            content = `${result.image ? `<img src="${result.image}" alt="image" style="max-width:100%"/><br/>` : ''}<h1>${result.title}</h1><p>${result.bodyText}</p>`;
+          }
+          
+          // Insert into editor and title box
+          const editor = document.getElementById('editor');
+          const titleBox = document.getElementById('title-box');
+          if (editor) editor.value = content;
+          if (titleBox) titleBox.value = result.title;
+          
+          // Update Puppeteer results display
+          const puppeteerResults = document.getElementById('puppeteer-results');
+          if (puppeteerResults) {
+            puppeteerResults.innerHTML = `
+              <div style="margin-bottom:2em;">
+                <h3>Extracted Article</h3>
+                ${result.image ? `<img src="${result.image}" style="max-width:100%;margin-bottom:1em;"/>` : ''}
+                <div><b>Title:</b> ${result.title}</div>
+                <div><b>URL:</b> ${url}</div>
+                <div><b>Body Preview:</b> <p>${result.bodyText ? result.bodyText.substring(0, 200) + '...' : 'No content extracted'}</p></div>
+              </div>
+            `;
+          }
+          
+          // Optionally update preview
+          if (typeof updateMarkdownPreview === 'function') updateMarkdownPreview();
+        } catch (error) {
+          console.error('Error extracting article:', error);
+          const puppeteerResults = document.getElementById('puppeteer-results');
+          if (puppeteerResults) {
+            puppeteerResults.innerHTML = `<div style="color: red;">Error extracting article: ${error.message}</div>`;
+          }
+        }
       } else {
-        content = `${article.image ? `<img src=\"${article.image}\" alt=\"image\" style=\"max-width:100%\"/><br/>` : ''}<h1>${article.title}</h1><p>${article.body}</p>`;
+        // Show example articles when no URL
+        const puppeteerResults = document.getElementById('puppeteer-results');
+        if (puppeteerResults) {
+          puppeteerResults.innerHTML = `
+            <div style="margin-bottom:2em;">
+              <h3>Enter a URL and click this tab to extract with Puppeteer</h3>
+              <p>Example URLs to try:</p>
+              <ul>
+                <li>https://www.belfastlive.co.uk/news/northern-ireland/storm-floris-ni-weather-breaking-32181026</li>
+                <li>https://www.bbc.com/news/articles/[article-id]</li>
+              </ul>
+            </div>
+          `;
+        }
       }
-      // Insert into editor and title box
-      const editor = document.getElementById('editor');
-      const titleBox = document.getElementById('title-box');
-      if (editor) editor.value = content;
-      if (titleBox) titleBox.value = article.title;
-      // Optionally update preview
-      if (typeof updateMarkdownPreview === 'function') updateMarkdownPreview();
     };
   }
 
@@ -177,40 +217,51 @@ function updateMarkdownPreview() {
   document.getElementById('output').innerHTML = simpleMarkdownToHtml(md);
 }
 
-// News Extractor Web Version
+// News Extractor Web Version - Updated to use Puppeteer API
 async function fetchAndExtract(url) {
   setStatus('Fetching...');
   showProgressBar();
   try {
     // Animate progress bar to 40% while fetching
     setProgressBar(40);
-    // Use a faster CORS proxy (try corsproxy.io)
-    const res = await fetch(`https://corsproxy.io/?${encodeURIComponent(url)}`);
+    
+    // Use the new Puppeteer API endpoint
+    const response = await fetch('/api/extract', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ url })
+    });
+    
     setProgressBar(70);
-    const data = await res.json();
-    setProgressBar(85);
-    const html = data.contents;
-    const doc = new DOMParser().parseFromString(html, 'text/html');
-    // Extraction logic (similar to extension)
-    let article = doc.querySelector('article') || doc.querySelector('main') || doc.body;
-    let title = doc.querySelector('meta[property="og:title"]')?.content || doc.title;
-    let image = doc.querySelector('meta[property="og:image"]')?.content || '';
-    let description = doc.querySelector('meta[name="description"]')?.content || doc.querySelector('meta[property="og:description"]')?.content || '';
-    let text = '';
-    if (article) {
-      article.querySelectorAll('script, nav, aside, style, noscript, iframe, header, footer, .ad, .ads, .advert').forEach(e => e.remove());
-      // Preserve line breaks as markdown (double space + newline)
-      text = article.innerText.replace(/\r?\n/g, '  \n').trim();
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
     }
+    
+    const data = await response.json();
+    setProgressBar(85);
+    
+    if (!data.success) {
+      throw new Error(data.error || 'Failed to extract article');
+    }
+    
+    const article = data.article;
+    let title = article.title || '';
+    let image = article.image || '';
+    let text = article.bodyText || '';
+    
     let markdown = `# ${title}\n`;
-    if (description) markdown += `\n> ${description}\n`;
-    markdown += `\n${text}`;
+    if (text) markdown += `\n${text}`;
     if (image) markdown = `![image](${image})\n\n` + markdown;
+    
     setProgressBar(100);
     setTimeout(hideProgressBar, 500);
     return { title, url, image, markdown };
   } catch (e) {
-    setStatus('Failed to fetch or extract.');
+    console.error('Extraction error:', e);
+    setStatus('Failed to fetch or extract: ' + e.message);
     setProgressBar(100);
     setTimeout(hideProgressBar, 500);
     return { title: '', url, image: '', markdown: '' };

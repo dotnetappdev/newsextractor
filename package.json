@@ -1,0 +1,26 @@
+{
+  "name": "news-extractor",
+  "version": "1.0.0",
+  "description": "News article extractor with Playwright",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "puppeteer": "^21.11.0"
+  },
+  "engines": {
+    "node": ">=16"
+  },
+  "keywords": [
+    "news",
+    "extractor",
+    "playwright",
+    "cors"
+  ],
+  "author": "",
+  "license": "MIT"
+}
