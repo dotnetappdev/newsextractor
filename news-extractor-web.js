@@ -278,8 +278,14 @@ function hideProgressBar() {
   if (numEl) numEl.textContent = (window.getModifierState && window.getModifierState('NumLock')) ? 'NUM' : '';
 }
 function setProgressBar(percent) {
-  const inner = document.querySelector('.progress-bar-inner');
-  if (inner) inner.style.width = percent + '%';
+  const bar = document.getElementById('progress-bar');
+  const label = document.getElementById('progress-label');
+  if (bar) bar.style.width = percent + '%';
+  if (label) {
+    if (percent === 0) label.textContent = 'Idle';
+    else if (percent < 100) label.textContent = `Fetching ${percent}%`;
+    else label.textContent = 'Done';
+  }
 }
 
 function setStatus(msg) {

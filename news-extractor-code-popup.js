@@ -25,6 +25,7 @@ function getModeFromLang(lang) {
 
 window.addEventListener('DOMContentLoaded', () => {
   const langSelect = document.getElementById('code-lang-select');
+  const modeSelect = document.getElementById('code-insert-mode');
   editor = CodeMirror(document.getElementById('code-editor'), {
     value: '',
     mode: getModeFromLang(langSelect.value),
@@ -39,14 +40,33 @@ window.addEventListener('DOMContentLoaded', () => {
     editor.setOption('mode', getModeFromLang(langSelect.value));
   });
 
+  function wrapCode(code, lang, mode) {
+    if (mode === 'markdown') {
+      return `\n\n\${lang}\n${code}\n\\n\n`.replace(/\u007F/g, '`');
+    } else {
+      return `\n<pre><code class="language-${lang}">${code.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</code></pre>\n`;
+    }
+  }
+
   document.getElementById('insert-code').onclick = () => {
     const code = editor.getValue();
     const lang = langSelect.value;
-    // Send code and language back to opener
+    const mode = modeSelect.value;
+    const wrapped = wrapCode(code, lang, mode);
     if (window.opener) {
-      window.opener.postMessage({ type: 'insertCode', code, lang }, '*');
+      window.opener.postMessage({ type: 'insertCode', code: wrapped, lang }, '*');
     }
     window.close();
+  };
+
+  document.getElementById('apply-code').onclick = () => {
+    const code = editor.getValue();
+    const lang = langSelect.value;
+    const mode = modeSelect.value;
+    const wrapped = wrapCode(code, lang, mode);
+    if (window.opener) {
+      window.opener.postMessage({ type: 'insertCode', code: wrapped, lang }, '*');
+    }
   };
 
   document.getElementById('close-code-popup').onclick = () => {

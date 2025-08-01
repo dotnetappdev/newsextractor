@@ -35,8 +35,17 @@
       <option value="ruby">Ruby</option>
       <option value="typescript">TypeScript</option>
     </select>
+    <label style="margin-left:1em;">Mode:
+      <select id="code-insert-mode">
+        <option value="markdown">Markdown</option>
+        <option value="html">HTML</option>
+      </select>
+    </label>
     <div id="code-editor" style="height:250px;margin-top:1em;"></div>
-    <button id="insert-code">Insert</button>
+    <div style="margin-top:1em; display: flex; gap: 1em; align-items: center;">
+      <button id="apply-code">Apply</button>
+      <button id="insert-code">Insert & Close</button>
+    </div>
   </div>
   <!-- CodeMirror JS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
