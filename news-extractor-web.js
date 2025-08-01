@@ -16,6 +16,17 @@ function simpleMarkdownToHtml(md) {
 function updateMarkdownPreview() {
   const md = document.getElementById('markdown').value;
   document.getElementById('markdown-preview').innerHTML = simpleMarkdownToHtml(md);
+  updateLineNumbers(md);
+}
+
+function updateLineNumbers(md) {
+  const lines = md.split('\n').length;
+  let html = '';
+  for (let i = 1; i <= lines; i++) {
+    html += i + '<br>';
+  }
+  const ln = document.getElementById('line-numbers');
+  if (ln) ln.innerHTML = html;
 }
 
 // News Extractor Web Version
@@ -130,7 +141,14 @@ if (copyTitleBtn) copyTitleBtn.onclick = () => copyToClipboard('title');
 const copyMarkdownBtn = document.getElementById('copy-markdown');
 if (copyMarkdownBtn) copyMarkdownBtn.onclick = () => copyToClipboard('markdown');
 const mdBox = document.getElementById('markdown');
-if (mdBox) mdBox.addEventListener('input', updateMarkdownPreview);
+if (mdBox) {
+  mdBox.addEventListener('input', updateMarkdownPreview);
+  // Sync scroll line numbers with textarea
+  mdBox.addEventListener('scroll', function() {
+    const ln = document.getElementById('line-numbers');
+    if (ln) ln.scrollTop = mdBox.scrollTop;
+  });
+}
 
 // Markdown formatting toolbar logic
 window.formatMarkdown = function(type) {

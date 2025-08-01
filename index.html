@@ -33,7 +33,13 @@
           <button type="button" class="md-btn" onclick="formatMarkdown('h2')">H2</button>
           <button type="button" class="md-btn" onclick="formatMarkdown('img')">Img</button>
         </div>
-        <textarea id="markdown" style="min-height:220px;font-size:1.1em;"></textarea>
+        <div class="editor-preview-row">
+          <div class="editor-with-lines">
+            <div class="line-numbers" id="line-numbers"></div>
+            <textarea id="markdown" class="editor-textarea"></textarea>
+          </div>
+          <div id="markdown-preview" class="markdown-preview"></div>
+        </div>
         <button id="copy-markdown" class="bbc-btn">Copy Markdown</button>
         <label for="article-text">Extracted Article Text (appended to markdown)</label>
         <textarea id="article-text" style="min-height:120px;font-size:1em;" readonly></textarea>
