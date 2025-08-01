@@ -1,43 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>News Extractor Web</title>
+  <title>Markdown Live Preview</title>
   <link rel="stylesheet" href="news-extractor.css">
 </head>
 <body>
-  <header class="mlp-header">
-    <h1>News Extractor</h1>
-  </header>
-  <main class="mlp-main">
-    <div class="mlp-url-row">
-      <input id="input-url" type="text" placeholder="Paste article URL here" />
-      <button id="fetch-article">Fetch</button>
-    </div>
-    <div class="mlp-main-row">
-      <div class="mlp-col mlp-col-editor">
-        <div class="mlp-toolbar">
-          <button type="button" data-action="bold"><b>B</b></button>
-          <button type="button" data-action="italic"><i>I</i></button>
-          <button type="button" data-action="heading">H</button>
-          <button type="button" data-action="link">🔗</button>
-          <button type="button" data-action="image">🖼️</button>
-        </div>
-        <div class="mlp-editor-wrap">
-          <div class="mlp-line-numbers" id="line-numbers"></div>
-          <textarea id="markdown-editor" class="mlp-editor" placeholder="Write your markdown here..."></textarea>
-        </div>
+  <h1 class="mlp-title">Markdown Live Preview</h1>
+  <div class="mlp-url-row">
+    <input id="input-url" type="text" placeholder="Paste article URL here" class="mlp-url-input">
+    <button id="fetch-article" class="mlp-url-btn">Fetch</button>
+  </div>
+  <div class="mlp-main-row">
+    <div class="mlp-editor-panel">
+      <div class="mlp-toolbar">
+        <button type="button" data-action="bold">B</button>
+        <button type="button" data-action="italic">I</button>
+        <button type="button" data-action="heading">H</button>
+        <button type="button" data-action="link">🔗</button>
+        <button type="button" data-action="image">🖼️</button>
       </div>
-      <div class="mlp-col mlp-col-preview">
-        <div id="preview" class="mlp-preview"></div>
+      <div class="mlp-editor-wrap">
+        <div id="line-numbers" class="mlp-line-numbers"></div>
+        <textarea id="markdown-editor" class="mlp-editor" placeholder="Write your markdown here..."></textarea>
       </div>
     </div>
-  <script>
-    // Ensure preview updates on page load
-    window.addEventListener('DOMContentLoaded', function() {
-      if (window.updateMarkdownPreview) window.updateMarkdownPreview();
-    });
-  </script>
+    <div class="mlp-preview-panel">
+      <div id="preview" class="mlp-preview"></div>
+    </div>
+  </div>
+  <script src="news-extractor-web.js"></script>
+</body>
+</html>
     </div>
   </main>
   <footer class="bbc-footer">&copy; 2025 News Extractor | Inspired by BBC News</footer>
