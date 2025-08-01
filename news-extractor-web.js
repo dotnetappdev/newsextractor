@@ -1,9 +1,14 @@
 // News Extractor Web Version
 async function fetchAndExtract(url) {
   setStatus('Fetching...');
+  showProgressBar();
   try {
+    // Animate progress bar to 40% while fetching
+    setProgressBar(40);
     const res = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`);
+    setProgressBar(70);
     const data = await res.json();
+    setProgressBar(85);
     const html = data.contents;
     const doc = new DOMParser().parseFromString(html, 'text/html');
     // Extraction logic (similar to extension)
@@ -17,11 +22,30 @@ async function fetchAndExtract(url) {
     }
     let markdown = `# ${title}\n\n${text}`;
     if (image) markdown = `![image](${image})\n\n` + markdown;
+    setProgressBar(100);
+    setTimeout(hideProgressBar, 500);
     return { title, url, image, markdown };
   } catch (e) {
     setStatus('Failed to fetch or extract.');
+    setProgressBar(100);
+    setTimeout(hideProgressBar, 500);
     return { title: '', url, image: '', markdown: '' };
   }
+}
+
+function showProgressBar() {
+  const bar = document.getElementById('progress-bar');
+  if (bar) bar.style.display = '';
+  setProgressBar(10);
+}
+function hideProgressBar() {
+  const bar = document.getElementById('progress-bar');
+  if (bar) bar.style.display = 'none';
+  setProgressBar(0);
+}
+function setProgressBar(percent) {
+  const inner = document.querySelector('.progress-bar-inner');
+  if (inner) inner.style.width = percent + '%';
 }
 
 function setStatus(msg) {

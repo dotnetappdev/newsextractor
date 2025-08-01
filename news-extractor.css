@@ -1,3 +1,19 @@
+.progress-bar {
+  width: 100%;
+  background: #eee;
+  border-radius: 6px;
+  height: 18px;
+  margin: 18px 0 24px 0;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  overflow: hidden;
+}
+.progress-bar-inner {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #b80000 60%, #e60000 100%);
+  border-radius: 6px;
+  transition: width 0.4s cubic-bezier(.4,2,.6,1);
+}
 .md-toolbar {
   display: flex;
   gap: 8px;
@@ -53,12 +69,12 @@ body {
 }
 #input-url {
   flex: 1;
-  font-size: 1.1em;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  min-width: 320px;
-  max-width: 600px;
+  font-size: 1.2em;
+  padding: 14px;
+  border: 1.5px solid #ccc;
+  border-radius: 6px;
+  min-width: 400px;
+  max-width: 700px;
 }
 .bbc-content-row {
   display: flex;
@@ -66,21 +82,21 @@ body {
   justify-content: center;
 }
 .bbc-center-col {
-  flex: 0 0 260px;
+  flex: 0 0 320px;
   display: flex;
   flex-direction: column;
   align-items: center;
   background: #f9f9f9;
   border-radius: 8px;
-  padding: 18px 12px;
+  padding: 24px 16px;
   box-shadow: 0 1px 4px rgba(0,0,0,0.04);
-  margin-right: 8px;
+  margin-right: 12px;
 }
 .bbc-right-col {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 18px;
 }
 label {
   font-weight: bold;
@@ -89,12 +105,12 @@ label {
 }
 textarea {
   width: 100%;
-  min-height: 60px;
-  font-size: 1.1em;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  margin-bottom: 8px;
+  min-height: 80px;
+  font-size: 1.2em;
+  padding: 14px;
+  border: 1.5px solid #ccc;
+  border-radius: 6px;
+  margin-bottom: 10px;
   background: #f7f7f7;
   resize: vertical;
 }

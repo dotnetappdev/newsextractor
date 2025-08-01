@@ -14,15 +14,18 @@
       <input id="input-url" type="text" placeholder="Paste article URL here" />
       <button id="fetch-article" class="bbc-btn bbc-btn-main">Fetch & Extract</button>
     </div>
+    <div id="progress-bar" class="progress-bar" style="display:none;">
+      <div class="progress-bar-inner"></div>
+    </div>
     <div class="bbc-content-row">
       <div class="bbc-center-col">
         <label for="url">URL</label>
-        <textarea id="url" readonly></textarea>
+        <textarea id="url" readonly style="min-height:60px;font-size:1.1em;"></textarea>
         <button id="copy-url" class="bbc-btn">Copy URL</button>
       </div>
       <div class="bbc-right-col">
         <label for="title">Title</label>
-        <textarea id="title" readonly></textarea>
+        <textarea id="title" readonly style="min-height:60px;font-size:1.1em;"></textarea>
         <button id="copy-title" class="bbc-btn">Copy Title</button>
         <label for="markdown">Article (Markdown)</label>
         <div class="md-toolbar">
@@ -32,7 +35,7 @@
           <button type="button" class="md-btn" onclick="formatMarkdown('h2')">H2</button>
           <button type="button" class="md-btn" onclick="formatMarkdown('img')">Img</button>
         </div>
-        <textarea id="markdown"></textarea>
+        <textarea id="markdown" style="min-height:220px;font-size:1.1em;"></textarea>
         <button id="copy-markdown" class="bbc-btn">Copy Markdown</button>
         <label>Image</label>
         <div id="image-container"></div>
