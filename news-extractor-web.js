@@ -14,19 +14,8 @@ function simpleMarkdownToHtml(md) {
 }
 
 function updateMarkdownPreview() {
-  const md = document.getElementById('markdown').value;
-  document.getElementById('markdown-preview').innerHTML = simpleMarkdownToHtml(md);
-  updateLineNumbers(md);
-}
-
-function updateLineNumbers(md) {
-  const lines = md.split('\n').length;
-  let html = '';
-  for (let i = 1; i <= lines; i++) {
-    html += i + '<br>';
-  }
-  const ln = document.getElementById('line-numbers');
-  if (ln) ln.innerHTML = html;
+  const md = document.getElementById('editor').value;
+  document.getElementById('output').innerHTML = simpleMarkdownToHtml(md);
 }
 
 // News Extractor Web Version
@@ -97,39 +86,27 @@ function copyToClipboard(id) {
 }
 
 
+
 window.addEventListener('DOMContentLoaded', function() {
   const fetchBtn = document.getElementById('fetch-article');
   if (fetchBtn) {
     fetchBtn.onclick = async () => {
       const url = document.getElementById('input-url').value;
-      if (!url) return setStatus('Enter a URL.');
+      if (!url) return;
       const result = await fetchAndExtract(url);
-      const titleBox = document.getElementById('title');
-      if (titleBox) titleBox.value = result.title || '';
-      // Insert URL as first line in markdown
-      let markdownWithUrl = url ? `${url}\n\n${result.markdown || ''}` : (result.markdown || '');
-      // Append article text to markdown
-      if (result.markdown && result.markdown !== '') {
-        markdownWithUrl += `\n\n${result.markdown}`;
-      }
-      const mdBox = document.getElementById('markdown');
-      if (mdBox) mdBox.value = markdownWithUrl;
-      // Show extracted article text in its own box
-      const artBox = document.getElementById('article-text');
-      if (artBox) artBox.value = result.markdown || '';
+      // Compose markdown: title first line, image second (if any), then article body
+      let markdown = '';
+      if (result.title) markdown += `# ${result.title}\n`;
+      if (result.image) markdown += `![image](${result.image})\n`;
+      if (result.markdown) markdown += `\n${result.markdown}`;
+      const mdBox = document.getElementById('editor');
+      if (mdBox) mdBox.value = markdown.trim();
       updateMarkdownPreview();
-      const imgBox = document.getElementById('image-container');
-      if (imgBox) {
-        if (result.image) {
-          imgBox.innerHTML = `<img src="${result.image}" alt="Article Image">`;
-        } else {
-          imgBox.innerHTML = '';
-        }
-      }
-      setStatus('Done!');
     };
   }
-  // Always update preview on load
+  // Live preview on input
+  const mdBox = document.getElementById('editor');
+  if (mdBox) mdBox.addEventListener('input', updateMarkdownPreview);
   updateMarkdownPreview();
 });
 

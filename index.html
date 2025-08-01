@@ -2,39 +2,46 @@
 <html lang="en">
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Markdown Live Preview</title>
-  <link rel="stylesheet" href="news-extractor.css">
-</head>
-<body>
-  <h1 class="mlp-title">Markdown Live Preview</h1>
-  <div class="mlp-url-row">
-    <input id="input-url" type="text" placeholder="Paste article URL here" class="mlp-url-input">
-    <button id="fetch-article" class="mlp-url-btn">Fetch</button>
-  </div>
-  <div class="mlp-outer-row">
-    <div class="mlp-main-row">
-      <div class="mlp-editor-panel">
-        <div class="mlp-toolbar">
-          <button type="button" data-action="bold">B</button>
-          <button type="button" data-action="italic">I</button>
-          <button type="button" data-action="heading">H</button>
-          <button type="button" data-action="link">🔗</button>
-          <button type="button" data-action="image">🖼️</button>
-        </div>
-        <div class="mlp-editor-wrap">
-          <div id="line-numbers" class="mlp-line-numbers"></div>
-          <textarea id="markdown-editor" class="mlp-editor" placeholder="Write your markdown here..."></textarea>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta http-equiv="content-language" content="en">
+    <meta http-equiv="content-script-type" content="text/javascript">
+    <meta http-equiv="content-style-type" content="text/css">
+    <meta name="description" content="This is the online markdown editor with live preview.">
+    <link rel="stylesheet" type="text/css" href="news-extractor.css">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <title>Markdown Live Preview</title>
+  </head>
+  <body>
+    <header>
+      <div id="menu-items">
+        <div><a href="/">Markdown Live Preview</a></div>
+        <div id="reset-button"><a href="#">Reset</a></div>
+        <div id="copy-button"><a href="#">Copy</a></div>
+        <div id="sync-button"><input type="checkbox" id="sync-scroll-checkbox"><label for="sync-scroll-checkbox">Sync scroll</label></div>
+      </div>
+      <div id="github"><a href="https://github.com/tanabe/markdown-live-preview"><img src="image/GitHub-Mark-Light-32px.webp"></a></div>
+    </header>
+    <div id="container" class="split-container">
+      <div id="edit" class="column editor-pane">
+        <div id="editor-wrapper">
+          <textarea id="editor" placeholder="Write your markdown here..."></textarea>
         </div>
       </div>
-      <div class="mlp-preview-panel">
-        <div id="preview" class="mlp-preview"></div>
+      <div id="split-divider" class="split-divider"></div>
+      <div id="preview" class="column preview-pane">
+        <div id="preview-wrapper">
+          <div id="output" class="content markdown-body"></div>
+        </div>
       </div>
     </div>
-  </div>
-  <script src="news-extractor-web.js"></script>
-</body>
+    <footer></footer>
+    <div style="display:none">
+      <input id="input-url" type="text" placeholder="Paste article URL here">
+      <button id="fetch-article">Fetch</button>
+    </div>
+    <script src="news-extractor-web.js"></script>
+  </body>
 </html>
     </div>
   </main>
