@@ -58,6 +58,44 @@ async function fetchAndExtract(url) {
   }
 }
 
+// Open code editor popup and handle code insertion
+document.addEventListener('DOMContentLoaded', function () {
+  const codeBtn = document.getElementById('code-btn');
+  if (codeBtn) {
+    codeBtn.addEventListener('click', function () {
+      window.open('news-extractor-code-popup.html', 'Insert Code', 'width=600,height=500');
+    });
+  }
+});
+
+// Listen for code insertion from popup
+window.addEventListener('message', function (event) {
+  if (event.data && event.data.type === 'insertCode') {
+    const { code, lang } = event.data;
+    const textarea = document.getElementById('editor');
+    if (!textarea) return;
+    // Detect mode (markdown or html)
+    const mode = document.querySelector('input[name="mode"]:checked')?.value || 'markdown';
+    let codeBlock = '';
+    if (mode === 'markdown') {
+      codeBlock = `\n\n\`\`\`${lang}\n${code}\n\`\`\`\n\n`;
+    } else {
+      codeBlock = `\n<pre><code class=\"language-${lang}\">${code.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</code></pre>\n`;
+    }
+    // Insert at cursor position
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const before = textarea.value.substring(0, start);
+    const after = textarea.value.substring(end);
+    textarea.value = before + codeBlock + after;
+    textarea.focus();
+    textarea.selectionStart = textarea.selectionEnd = before.length + codeBlock.length;
+    // Optionally trigger preview update
+    if (typeof updatePreview === 'function') updatePreview();
+  }
+});
+
+// ...existing code...
 function showProgressBar() {
   const bar = document.getElementById('progress-bar');
   if (bar) bar.style.display = '';

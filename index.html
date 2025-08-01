@@ -22,24 +22,32 @@
       </div>
       <div id="github"><a href="https://github.com/tanabe/markdown-live-preview"><img src="image/GitHub-Mark-Light-32px.webp"></a></div>
     </header>
+
+    <!-- Controls above split frame -->
+    <div id="top-controls">
+      <div class="mode-switch">
+        <label><input type="radio" name="mode" value="markdown" checked> Markdown</label>
+        <label><input type="radio" name="mode" value="html"> HTML</label>
+      </div>
+      <input id="title-box" type="text" placeholder="Article Title" />
+      <div class="url-row">
+        <input id="input-url" type="text" placeholder="Paste article URL here" />
+        <button id="fetch-article">Fetch</button>
+      </div>
+    </div>
+
     <div id="container" class="split-container">
       <div id="edit" class="column editor-pane">
-        <div id="editor-controls">
-          <input id="title-box" type="text" placeholder="Article Title" />
-          <div class="url-row">
-            <input id="input-url" type="text" placeholder="Paste article URL here" />
-            <button id="fetch-article">Fetch</button>
-          </div>
-        </div>
         <div id="editor-toolbar">
           <button type="button" data-action="bold"><b>B</b></button>
           <button type="button" data-action="italic"><i>I</i></button>
           <button type="button" data-action="heading">H</button>
           <button type="button" data-action="link">🔗</button>
           <button type="button" data-action="image">🖼️</button>
+          <button type="button" data-action="code" id="code-btn">&lt;/&gt;</button>
         </div>
         <div id="editor-wrapper">
-          <textarea id="editor" placeholder="Write your markdown here..."></textarea>
+          <textarea id="editor" placeholder="Write your markdown or HTML here..."></textarea>
         </div>
       </div>
       <div id="split-divider" class="split-divider"></div>
@@ -49,17 +57,10 @@
         </div>
       </div>
     </div>
-    <footer></footer>
-    <div style="display:none">
-      <input id="input-url" type="text" placeholder="Paste article URL here">
-      <button id="fetch-article">Fetch</button>
-    </div>
+
+    <!-- Code editor popup is now in news-extractor-code-popup.html -->
+    <footer class="bbc-footer">&copy; 2025 News Extractor | Inspired by BBC News</footer>
+    <!-- CodeMirror and other scripts will be loaded in JS -->
     <script src="news-extractor-web.js"></script>
   </body>
-</html>
-    </div>
-  </main>
-  <footer class="bbc-footer">&copy; 2025 News Extractor | Inspired by BBC News</footer>
-  <script src="news-extractor-web.js"></script>
-</body>
 </html>
