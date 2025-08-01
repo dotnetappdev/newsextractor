@@ -95,7 +95,34 @@ window.addEventListener('message', function (event) {
   }
 });
 
-// ...existing code...
+// Splitter logic for resizable panes
+window.addEventListener('DOMContentLoaded', function () {
+  const divider = document.getElementById('split-divider');
+  const left = document.getElementById('edit');
+  const right = document.getElementById('preview');
+  let isDragging = false;
+  divider.addEventListener('mousedown', function (e) {
+    isDragging = true;
+    document.body.style.cursor = 'col-resize';
+    document.body.style.userSelect = 'none';
+  });
+  window.addEventListener('mousemove', function (e) {
+    if (!isDragging) return;
+    const container = document.getElementById('container');
+    const rect = container.getBoundingClientRect();
+    let percent = (e.clientX - rect.left) / rect.width;
+    percent = Math.max(0.1, Math.min(0.9, percent));
+    left.style.flex = percent + ' 1 0';
+    right.style.flex = (1 - percent) + ' 1 0';
+  });
+  window.addEventListener('mouseup', function () {
+    if (isDragging) {
+      isDragging = false;
+      document.body.style.cursor = '';
+      document.body.style.userSelect = '';
+    }
+  });
+});
 function showProgressBar() {
   const bar = document.getElementById('progress-bar');
   if (bar) bar.style.display = '';

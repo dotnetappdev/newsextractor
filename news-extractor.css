@@ -43,10 +43,10 @@
   background: #e0e0e0;
 }
 #editor-toolbar {
-  width: 100%;
   display: flex;
   gap: 0.5rem;
-  margin-bottom: 0.5rem;
+  align-items: center;
+  margin-bottom: 0;
 }
 #editor-toolbar button {
   background: #fff;
@@ -195,11 +195,13 @@ footer {
 }
 
 .column {
-  width: 50%;
+  flex: 1 1 0;
+  min-width: 0;
   padding: 0;
   margin: 0;
   white-space: nowrap;
   vertical-align: top;
+  height: 100%;
 }
 
 #preview.column {
@@ -211,6 +213,7 @@ footer {
   display: flex;
   height: 100%;
   width: 100%;
+  min-height: 0;
 }
 
 .editor-pane,
@@ -218,11 +221,13 @@ footer {
   height: 100%;
 }
 
-.split-divider {
+#split-divider {
   width: 5px;
   background: #ccc;
   cursor: col-resize;
   z-index: 1;
+  min-width: 5px;
+  min-height: 100px;
 }
 
 .split-divider.hover {
