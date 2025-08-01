@@ -25,25 +25,23 @@
 
     <!-- Controls above split frame -->
     <div id="top-controls">
-      <div style="display: flex; align-items: center; gap: 1rem;">
-        <div class="mode-switch">
-          <label><input type="radio" name="mode" value="markdown" checked> Markdown</label>
-          <label><input type="radio" name="mode" value="html"> HTML</label>
-        </div>
-        <div id="editor-toolbar" style="margin-bottom: 0;">
-          <button type="button" data-action="bold"><b>B</b></button>
-          <button type="button" data-action="italic"><i>I</i></button>
-          <button type="button" data-action="heading">H</button>
-          <button type="button" data-action="link">🔗</button>
-          <button type="button" data-action="image">🖼️</button>
-          <button type="button" data-action="code" id="code-btn">&lt;/&gt;</button>
-        </div>
+      <div class="mode-switch" style="margin-bottom: 0.5rem;">
+        <label><input type="radio" name="mode" value="markdown" checked> Markdown</label>
+        <label><input type="radio" name="mode" value="html"> HTML</label>
       </div>
       <div class="url-row">
         <input id="input-url" type="text" placeholder="Paste article URL here" />
         <button id="fetch-article">Fetch</button>
       </div>
-      <input id="title-box" type="text" placeholder="Article Title" />
+      <input id="title-box" type="text" placeholder="Article Title" style="margin-bottom:0.5rem;" />
+      <div id="editor-toolbar">
+        <button type="button" data-action="bold"><b>B</b></button>
+        <button type="button" data-action="italic"><i>I</i></button>
+        <button type="button" data-action="heading">H</button>
+        <button type="button" data-action="link">🔗</button>
+        <button type="button" data-action="image">🖼️</button>
+        <button type="button" data-action="code" id="code-btn">&lt;/&gt;</button>
+      </div>
     </div>
 
     <div id="container" class="split-container">
