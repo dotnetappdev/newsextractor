@@ -352,22 +352,6 @@ window.addEventListener('DOMContentLoaded', function() {
   updateMarkdownPreview();
 });
 
-document.getElementById('copy-markdown').onclick = () => copyToClipboard('markdown');
-document.getElementById('markdown').addEventListener('input', updateMarkdownPreview);
-
-const copyTitleBtn = document.getElementById('copy-title');
-if (copyTitleBtn) copyTitleBtn.onclick = () => copyToClipboard('title');
-const copyMarkdownBtn = document.getElementById('copy-markdown');
-if (copyMarkdownBtn) copyMarkdownBtn.onclick = () => copyToClipboard('markdown');
-const mdBox = document.getElementById('markdown');
-if (mdBox) {
-  mdBox.addEventListener('input', updateMarkdownPreview);
-  // Sync scroll line numbers with textarea
-  mdBox.addEventListener('scroll', function() {
-    const ln = document.getElementById('line-numbers');
-    if (ln) ln.scrollTop = mdBox.scrollTop;
-  });
-}
 
 // Markdown formatting toolbar logic
 window.formatMarkdown = function(type) {
