@@ -18,7 +18,7 @@
       <div class="progress-bar-inner"></div>
     </div>
     <div class="bbc-content-row">
-      <div class="bbc-left-col">
+      <div class="bbc-left-col bbc-left-align">
         <label for="title">Title</label>
         <textarea id="title" readonly style="min-height:60px;font-size:1.1em;"></textarea>
         <button id="copy-title" class="bbc-btn">Copy Title</button>
@@ -37,9 +37,15 @@
         <button id="copy-title-url" class="bbc-btn">Copy Title+URL</button>
         <div id="status"></div>
       </div>
-      <div class="bbc-preview-col">
-        <label>Live Preview</label>
-        <div id="markdown-preview" class="markdown-preview"></div>
+      <div class="bbc-preview-area">
+        <div class="bbc-preview-section">
+          <h3>Markdown Preview</h3>
+          <div id="markdown-preview" class="markdown-preview"></div>
+        </div>
+        <div class="bbc-preview-section">
+          <h3>Reddit Preview</h3>
+          <div id="reddit-preview" class="reddit-preview"></div>
+        </div>
       </div>
     </div>
   </main>
